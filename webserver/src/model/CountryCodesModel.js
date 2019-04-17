@@ -7,5 +7,16 @@ const CountryCodesSchema = new Schema({
     country: { type: String, maxlength: 100 }
 });
 
+CountryCodesSchema.virtual('toJSON')
+    .get(function () {
+        return () => {
+            let obj = this.toObject();            
+            delete obj._id;
+            delete obj.__v;
+            
+            return obj;
+        }
+    })
+
 exports.CountryCodesSchema = CountryCodesSchema;
 exports.CountryCodes = mongoose.model('CountryCodes', CountryCodesSchema);

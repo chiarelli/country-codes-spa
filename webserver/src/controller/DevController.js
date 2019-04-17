@@ -24,20 +24,33 @@ class DevController {
                 resp.set('Content-Disposition', `attachment; filename="country-codes.${type}"`);
         
                 return resp.status(200).send(result);                    
-            }).catch(function (err) {
-                return resp.status(400).send({codeHttpError: '400', msg: 'error during response processing.'});   
-            });
+            }).catch( _error400(resp) );
     }
     
     static act_model_country_codes(req, resp) {
         CountryCodes.find({}).exec()
             .then(function (result) {        
                 return resp.status(200).send(result);                    
-            }).catch(function (err) {
-                return resp.status(400).send({codeHttpError: '400', msg: 'error during response processing.'});   
-            });
+            }).catch( _error400(resp) );
     }
     
+    static act_create_model(req, resp) {
+        CountryCodes.create({
+            "code": "ZW",
+            "country": "Zimbabwe"
+        })
+            .then(function (result) {        
+                return resp.status(200).send(result);                    
+            }).catch( _error400(resp) );
+    }
+    
+}
+
+function _error400(resp) {
+    return (err) => {
+        console.log("Exception: ", err);
+        return resp.status(400).send({codeHttpError: '400', msg: 'error during response processing.'});           
+    }
 }
 
 module.exports = DevController;
