@@ -2,39 +2,63 @@ const Promise = require('bluebird');
 const Citartech = require('../service/CitartechService');
 const CountryCodesStore = require('../store/CountryCodesStore');
 
+const timeOut = 15 * 60 * 1000;
+var refreshCacheAt = new Date();
+
 class ApiBO {
     
     static getCountryCodes(type, sort = 'country', order = 'ascending') {
-        return new Promise(function (ok, fail) {
+        return Promise.coroutine(function* () {            
+            var list = [];
+            var now = new Date();
             
-            Citartech.getRawCountryCodes()
-                .then(function (resp) {
-                    let 
-                        lines     = resp.split(/\n/),
-                        newLines  = lines.slice(3, (lines.length - 2)  ),              
-                        list      = []
-                    ;
-
-                    for (let i = 0; i < newLines.length; i++) {
-                        let [ code, country ] = newLines[i].split(/\s\W*/);
-                        let data = { code, country };
-                        CountryCodesStore.saveOrUpdate(data);
-                        list.push(data);
-                    }
-                    console.log('** get CountryCodes for Citartech service **');
-                    ok(list);
-                })
-                .catch(function (err) {                    
-                    console.log('** get CountryCodes for CACHE mongodb **');
-                    CountryCodesStore.getAll().then(ok, fail);
-                });
+            var updateAt = new Date();
+                updateAt.setTime( now.getTime() + timeOut );
+            
+            try {
+                let 
+                    resp      = yield Citartech.getRawCountryCodes(),
+                    lines     = resp.split(/\n/),
+                    newLines  = lines.slice(3, (lines.length - 2)  )          
+                ;
                 
-        })
-        .then(function (list) {
-            return new Sortable(list).sortPicker(sort.toLowerCase().trim(), order.toLowerCase().trim() !== 'descending');       
-        });
+                for (let i = 0; i < newLines.length; i++) {
+                    let [ code, country ] = newLines[i].split(/\s\W*/);
+                    let data = { code, country };
+                    
+                    if( refreshCacheAt.getTime() < now.getTime() ) {
+                        yield CountryCodesStore.saveOrUpdate(data);
+                        refreshCacheAt = updateAt;
+                    }
+                    
+                    
+                    list.push(data);
+                }
+                
+                console.log('** get CountryCodes for Citartech service **');
+                
+            } catch (e) {
+                console.error(e);
+                console.log('Error get CountryCodes for Citartech service, try to recover through the cache ....');
+                console.log('** get CountryCodes for CACHE mongodb **');
+
+                list = yield CountryCodesStore.getAll(0);
+                
+                if( ! list.length ) {
+                    throw new Error( 'The cache was empty.' );
+                }
+                
+            }
+            
+            return new Sortable(list).sortPicker(sort.toLowerCase().trim(), order.toLowerCase().trim() !== 'descending');               
+            
+        })();        
     }
     
+}
+
+function _managerCache() {
+    cacheLastUpdated.getTime() ; 
 }
 
 class Sortable {
