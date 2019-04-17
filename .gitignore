@@ -54,3 +54,7 @@ webserver/.env.test
 
 # parcel-bundler cache (https://parceljs.org/)
 webserver/.cache
+
+### Project ###
+data/
+package-lock.json
