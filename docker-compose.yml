@@ -1,0 +1,20 @@
+version: "3.5"
+
+networks:                
+    tier:
+        internal: true
+        
+    internet:
+
+services:
+    job-vacancies:
+        build: .
+        networks:
+            internet:
+            tier:
+                aliases:
+                    - job-vacancies
+        ports:
+            - 4050:4050
+        volumes:
+            - ./webserver:/app
