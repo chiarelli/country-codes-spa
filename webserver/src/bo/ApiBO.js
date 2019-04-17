@@ -67,5 +67,4 @@ class Sortable {
     }
 }
 
-
 module.exports = ApiBO;

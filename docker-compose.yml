@@ -18,3 +18,16 @@ services:
             - 4050:4050
         volumes:
             - ./webserver:/app
+            
+    mongodb:
+        image: bitnami/mongodb:4.0
+        networks:
+            tier:
+                aliases:
+                    - mongodb
+        environment:
+          - MONGODB_USERNAME=vacancies
+          - MONGODB_PASSWORD=nCvm1l9uNg9ZzXowy
+          - MONGODB_DATABASE=vacancies
+        volumes:
+         - ./data:/bitnami

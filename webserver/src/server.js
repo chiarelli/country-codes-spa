@@ -1,7 +1,8 @@
 module.exports = function(input, done) {
     try {        
-//            require('dotenv-safe').load();
+        require('dotenv-safe').load();
         require('./router');
+        
         const srvHttp = require('./server/SrvHttp');
 
         srvHttp.getConn({
@@ -9,7 +10,7 @@ module.exports = function(input, done) {
             })
             .listen(4050);
 
-        console.log("webserver job-vacancies funcionando!");
+        console.log("api job-vacancies funcionando!");
 
     } catch (e) {
         console.log(e);
