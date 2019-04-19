@@ -44,7 +44,10 @@ class ApiBO {
                 console.log('Error get CountryCodes for Citartech service, try to recover through the cache ....');
                 console.log('** get CountryCodes for CACHE mongodb **');
 
-                list = yield CountryCodesStore.getAll(0);
+                ( yield CountryCodesStore.getAll(0) )
+                    .forEach(function (model) {
+                        list.push( model.toJSON() );
+                    })
                 
                 if( ! list.length ) {
                     throw new Error( 'The cache was empty.' );
