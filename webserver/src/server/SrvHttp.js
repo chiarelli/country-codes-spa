@@ -34,13 +34,18 @@ SrvHttp.getConn = (options) => {
         app.use(logger('dev'));
         app.use(helmet());
         
-        app.use(express.static(__dirname + '/../../www/public'));
         
         var mdw;
         for (i = 0; i < SrvHttp._middlewarers.length; i++) {
             mdw = SrvHttp._middlewarers[i];
             app.use(mdw);         
         }
+        
+        app.use(express.static(__dirname + '/../../www/public'));
+        app.use(function (req, resp, next) {
+            resp.set('Access-Control-Allow-Origin', '*');
+            next();
+        });
         
         app.use(options.root_api, router);
         
@@ -51,10 +56,6 @@ SrvHttp.getConn = (options) => {
             });
         });
         
-        app.use(function (req, resp, next) {
-            resp.set('Access-Control-Allow-Origin', '*');
-            next();
-        });
         
         app.use(function(err, req, res, next) {            
             let sender = {'error': err.message };
