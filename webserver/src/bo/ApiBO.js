@@ -66,9 +66,11 @@ class ApiBO {
 
 function _convertToTotem (type, input) {
     
-    console.log("type ---> %s", type)
-    
     switch (type) {
+        case 'xlsx':
+            const json2xls = require('json2xls');
+            return json2xls(input);
+        
         case 'csv':
             const { Parser } = require('json2csv'); 
             const fields = ['code', 'country', 'col3'];

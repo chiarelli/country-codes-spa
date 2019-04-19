@@ -2,7 +2,7 @@ const Promise = require('bluebird');
 const ApiBO = require('../bo/ApiBO');
 const { CountryCodes } = require('../model/CountryCodesModel');
 
-const types = ['json', 'xls', 'csv'];
+const types = ['json', 'xlsx', 'csv'];
 
 class DevController {
     
@@ -21,9 +21,13 @@ class DevController {
             .then(function (result) {
                 
                 resp.set('Content-Type', `application/${type}; charset=utf-8`); 
-                resp.set('Content-Disposition', `attachment; filename="country-codes.${type}"`);
-        
-                return resp.status(200).send(result);                    
+                resp.set('Content-Disposition', `attachment; filename="country-codes.${type}"`);        
+                resp.status(200);
+                
+                if( type === 'xlsx' ) return resp.end(result, 'binary');
+                
+                resp.send(result);
+                
             }).catch( _error400(resp) );
     }
     
