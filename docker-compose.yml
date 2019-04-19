@@ -15,7 +15,6 @@ services:
                 aliases:
                     - job-vacancies
         ports:
-            - 4050:4050
             - 8080:8080
         volumes:
             - ./webserver:/app

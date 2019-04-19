@@ -9,21 +9,10 @@ config.set({
 });
 
 function start() {
-    var thread = spawn('api-server.js');
+    
+    var thread = spawn('webserver.js');
     
     thread.send({}).promise().then(() => {},
-        (error) => {
-            console.log(error);
-            console.log('API vacancies reiniciando...');
-            thread.kill();
-            // Aguarda 500 ms para reiniciar
-            setTimeout(start, 500);
-        }
-    );
-    
-    var thread2 = spawn('webserver.js');
-    
-    thread2.send({}).promise().then(() => {},
         (error) => {
             console.log(error);
             console.log('webserver vacancies reiniciando...');
@@ -35,7 +24,6 @@ function start() {
 
     process.on('SIGHUP', () => { process.exit(); });
     process.on('exit', () => { thread.kill(); });
-    process.on('exit', () => { thread2.kill(); });
 };
 
 start();
