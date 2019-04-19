@@ -14,11 +14,13 @@
         "bluebird": "3.5.1",
         "body-parser": "1.18.3",
         "dotenv-safe": "6.0.0",
+        "ejs": "^2.6.1",
         "express": "4.16.3",
         "express-sanitizer": "1.0.4",
         "helmet": "3.13.0",
         "mongoose": "5.2.9",
         "morgan": "1.9.0",
+        "pug": "^2.0.3",
         "request": "2.88.0",
         "threads": "0.12.0"
     },

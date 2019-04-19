@@ -37,6 +37,9 @@ SrvHttp.getConn = (options) => {
         // Configurando o bodyParser para interpretar requisições requests
 //        app.use(bodyParser.json());
 //        app.use(bodyParser.urlencoded({ extended: false }));
+        app.engine('pug', require('pug').__express);
+        app.engine('html', require('ejs').renderFile);
+        app.use(express.static(__dirname + '/../../www/public'));
         
         var mdw;
         for (i = 0; i < SrvHttp._middlewarers.length; i++) {
