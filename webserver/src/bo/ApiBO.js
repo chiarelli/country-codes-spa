@@ -58,9 +58,27 @@ class ApiBO {
                 sortabled[i]['col3'] = BR_BRASIL;
             }
             
-            return sortabled;
-            
+            return _convertToTotem(type, sortabled);            
         })();        
+    }
+    
+}
+
+function _convertToTotem (type, input) {
+    
+    console.log("type ---> %s", type)
+    
+    switch (type) {
+        case 'csv':
+            const { Parser } = require('json2csv'); 
+            const fields = ['code', 'country', 'col3'];
+            
+            const json2csvParser = new Parser({ fields });
+            return json2csvParser.parse(input);
+            
+        case 'json':
+        default:
+            return input;
     }
     
 }
