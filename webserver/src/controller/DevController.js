@@ -10,13 +10,30 @@ class DevController {
         return resp.status(200).send({msg: 'Olá mundo!'});
     }
     
+    static act_create_model(req, resp) {
+        CountryCodes.create({
+            "code": "ZW",
+            "country": "Zimbabwe"
+        })
+            .then(function (result) {        
+                return resp.status(200).send(result);                    
+            }).catch( _error400(resp) );
+    }
+    
+    static act_model_country_codes(req, resp) {
+        CountryCodes.find({}).exec()
+            .then(function (result) {        
+                return resp.status(200).send(result);                    
+            }).catch( _error400(resp) );
+    }
+    
     static act_get_country_codes(req, resp) {        
-        let sort  = req.query['sort_prop'] || 'country',
-            order = req.query['sort_order'] || 'ascending', 
+        let sort  = req.query['order_by'] || 'country',
+            order = req.query['order'] || 'ascending', 
             application = req.query['application_type'] ? req.query['application_type'].trim().toLowerCase() : 'json', 
             type  = types[ types.indexOf( application ) ]
         ;    
-//        console.log(type);
+        
         ApiBO.getCountryCodes(type, sort, order)
             .then(function (result) {
                 
@@ -28,23 +45,6 @@ class DevController {
                 
                 resp.send(result);
                 
-            }).catch( _error400(resp) );
-    }
-    
-    static act_model_country_codes(req, resp) {
-        CountryCodes.find({}).exec()
-            .then(function (result) {        
-                return resp.status(200).send(result);                    
-            }).catch( _error400(resp) );
-    }
-    
-    static act_create_model(req, resp) {
-        CountryCodes.create({
-            "code": "ZW",
-            "country": "Zimbabwe"
-        })
-            .then(function (result) {        
-                return resp.status(200).send(result);                    
             }).catch( _error400(resp) );
     }
     
