@@ -1,9 +1,11 @@
 const Promise = require('bluebird');
-const Citartech = require('../service/CitartechService');
+const Citartech = require('../service/CitartechService')();
 const CountryCodesStore = require('../store/CountryCodesStore');
 
 const timeOut = 15 * 60 * 1000;
 var refreshCacheAt = new Date();
+
+const BR_BRASIL = '(BR) BRASIL';
 
 class ApiBO {
     
@@ -50,15 +52,17 @@ class ApiBO {
                 
             }
             
-            return new Sortable(list).sortPicker(sort.toLowerCase().trim(), order.toLowerCase().trim() !== 'descending');               
+            var sortabled = new Sortable(list).sortPicker(sort.toLowerCase().trim(), order.toLowerCase().trim() !== 'descending');
+            
+            for (let i = 0; i < sortabled.length; i++) {
+                sortabled[i]['col3'] = BR_BRASIL;
+            }
+            
+            return sortabled;
             
         })();        
     }
     
-}
-
-function _managerCache() {
-    cacheLastUpdated.getTime() ; 
 }
 
 class Sortable {

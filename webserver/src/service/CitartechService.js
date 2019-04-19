@@ -26,4 +26,6 @@ const Citartech = {
     
 }
 
-module.exports = Citartech;
+module.exports = function () {
+    return Citartech;
+}
