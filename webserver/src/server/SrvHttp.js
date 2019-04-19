@@ -34,8 +34,6 @@ SrvHttp.getConn = (options) => {
         app.use(logger('dev'));
         app.use(helmet());
         
-        app.engine('pug', require('pug').__express);
-        app.engine('html', require('ejs').renderFile);
         app.use(express.static(__dirname + '/../../www/public'));
         
         var mdw;
