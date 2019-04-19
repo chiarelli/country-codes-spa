@@ -31,7 +31,7 @@
 
 $(document).ready(function () {   
     
-                $.getJSON( "http://localhost:4050/job-vacancies/v1/dev/country-codes?sort_prop=country&sort_order=descending&application_type=json", {
+                $.getJSON( "/api/country-codes?order_by=country&order=descending&application_type=json", {
                    format: "json"
                 })
                 .done(function( data ) {

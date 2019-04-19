@@ -5,7 +5,7 @@ const URL = 'https://raw.githubusercontent.com/citartech/job-vacancies/master/as
 
 const Citartech = {
     
-    getRawCountryCodes: function () {
+    getRawCountryCodes() {
         return new Promise(function (ok, fail) {
                 request({
                     method: 'GET',

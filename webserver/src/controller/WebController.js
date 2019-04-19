@@ -16,4 +16,11 @@ class WebController {
     }
 }
 
+function _error400(resp) {
+    return (err) => {
+        console.log("Exception: ", err);
+        return resp.status(400).send({codeHttpError: '400', msg: 'error during response processing.'});           
+    }
+}
+
 module.exports = WebController;
