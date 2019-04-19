@@ -58,8 +58,7 @@ class ApiBO {
                 sortabled[i]['col3'] = BR_BRASIL;
             }
             
-            return sortabled;
-            
+            return { "rows": sortabled };            
         })();        
     }
     
