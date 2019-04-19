@@ -1,7 +1,6 @@
 const express    = require('express');
 const app        = express();
 const router     = express.Router();
-//const bodyParser = require('body-parser');
 const logger     = require('morgan');
 const helmet     = require('helmet');
 const UserError  = require('../utilits/UserError');
@@ -34,9 +33,7 @@ SrvHttp.getConn = (options) => {
     if( ! conn ) {     
         app.use(logger('dev'));
         app.use(helmet());
-        // Configurando o bodyParser para interpretar requisições requests
-//        app.use(bodyParser.json());
-//        app.use(bodyParser.urlencoded({ extended: false }));
+        
         app.engine('pug', require('pug').__express);
         app.engine('html', require('ejs').renderFile);
         app.use(express.static(__dirname + '/../../www/public'));
@@ -54,6 +51,11 @@ SrvHttp.getConn = (options) => {
                 error: 'not_found',
                 content: `Cannot ${req.method} ${req.connection.parser.incoming.url}`
             });
+        });
+        
+        app.use(function (req, resp, next) {
+            resp.set('Access-Control-Allow-Origin', '*');
+            next();
         });
         
         app.use(function(err, req, res, next) {            

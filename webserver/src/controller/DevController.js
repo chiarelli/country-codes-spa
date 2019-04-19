@@ -1,7 +1,6 @@
 const Promise = require('bluebird');
 const ApiBO = require('../bo/ApiBO');
 const { CountryCodes } = require('../model/CountryCodesModel');
-const path = require('path');
 
 const types = ['json', 'xls', 'csv'];
 
@@ -43,10 +42,6 @@ class DevController {
             .then(function (result) {        
                 return resp.status(200).send(result);                    
             }).catch( _error400(resp) );
-    }
-    
-    static act_get_www(req, resp) {
-        return resp.status(200).render(path.join(__dirname+'/../../www/table.html'));
     }
     
 }
