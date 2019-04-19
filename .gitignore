@@ -57,4 +57,4 @@ webserver/.cache
 
 ### Project ###
 data/
-package-lock.json
+webserver/package-lock.json
