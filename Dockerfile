@@ -1,13 +1,11 @@
-FROM node:9.4.0
+FROM node:10.15.3-jessie
 
-RUN apt-get update
-RUN apt-get install -y apt-utils build-essential
-RUN npm install npm@6.4.0 --global
-RUN npm install nodemon -g
+RUN npm install nodemon@1.18.11 -g && \
+ useradd --user-group --create-home --shell /bin/false app && \
+ usermod -a -G app app
 
-ENV WEBSERVER=/app
-RUN mkdir $WEBSERVER
+ENV WEBSERVER=/home/app
 
 WORKDIR $WEBSERVER
-EXPOSE 4050
+EXPOSE 8080
 CMD ["nodemon", "main.js"]
