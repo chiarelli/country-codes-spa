@@ -1,5 +1,6 @@
 nbproject
-data
+data/
+tmp/
 
 ### Node ###
 # Logs
@@ -39,7 +40,6 @@ webserver/.npm
 webserver/*.tgz
 
 # dotenv environment variables file
-webserver/.env
 webserver/.env.test
 
 # parcel-bundler cache (https://parceljs.org/)

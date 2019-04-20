@@ -49,7 +49,6 @@ webserver/.npm
 webserver/*.tgz
 
 # dotenv environment variables file
-webserver/.env
 webserver/.env.test
 
 # parcel-bundler cache (https://parceljs.org/)
@@ -58,3 +57,4 @@ webserver/.cache
 ### Project ###
 data/
 webserver/package-lock.json
+tmp/
