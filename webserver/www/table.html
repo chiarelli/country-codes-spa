@@ -34,7 +34,8 @@ $(document).ready(function () {
                 $.getJSON( "/api/country-codes?order_by=country&order=descending&application_type=json", {
                    format: "json"
                 })
-                .done(function( data ) {
+                .done(function( data ) {  
+                    
                     $("#jqGrid").jqGrid({
                     datatype: "local",
                     data: data,
@@ -43,9 +44,10 @@ $(document).ready(function () {
                             { label: 'Country', name: 'country', width: 80 },
                             { label: 'col3', name: 'col3', width: 80 }                   
                     ],
-                    viewrecords: false, // show the current page, data rang and total records on the toolbar
+                    viewrecords: false,
                     width: 840,
                     height: 500,
+                    rowNum: 500,
                 });
 
 	});
