@@ -1,0 +1,31 @@
+version: "3.5"
+
+networks:                
+    tier:
+        internal: true
+        
+    internet:
+
+services:
+    job-vacancies:
+        build: .
+        networks:
+            internet:
+            tier:
+                aliases:
+                    - job-vacancies
+        ports:
+            - 8080:8080
+            
+    mongodb:
+        image: bitnami/mongodb:4.0
+        networks:
+            tier:
+                aliases:
+                    - mongodb
+        environment:
+          - MONGODB_USERNAME=vacancies
+          - MONGODB_PASSWORD=nCvm1l9uNg9ZzXowy
+          - MONGODB_DATABASE=vacancies
+        volumes:
+         - ./data:/bitnami

@@ -1,0 +1,38 @@
+{
+    "name": "country-codes-spa",
+    "version": "1.0.0-beta",
+    "keywords": [
+        "util",
+        "functional",
+        "server",
+        "client",
+        "browser"
+    ],
+    "author": "Raphael Mathias Chiarelli Gomes",
+    "contributors": [],
+    "dependencies": {
+        "bluebird": "3.5.1",
+        "body-parser": "1.18.3",
+        "dotenv-safe": "6.0.0",
+        "ejs": "2.6.1",
+        "express": "4.16.3",
+        "express-sanitizer": "1.0.4",
+        "helmet": "3.13.0",
+        "json2csv": "4.5.0",
+        "json2xls": "^0.1.2",
+        "mongoose": "5.2.9",
+        "morgan": "1.9.0",
+        "pug": "2.0.3",
+        "request": "2.88.0",
+        "threads": "0.12.0"
+    },
+    "devDependencies": {
+        "moment": "^2.24.0",
+        "supertest": "^3.4.2",
+        "tap-spec": "^5.0.0",
+        "tape": "^4.9.2"
+    },
+    "scripts": {
+        "test": "node ./tests/tests.js | tap-spec"
+    }
+}
